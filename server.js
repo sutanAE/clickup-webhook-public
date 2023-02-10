@@ -1,3 +1,9 @@
+// Sutan.mufti@ambersideenergy.com
+// This server is for testing only
+// deployment to WAN; connecting to Clickup API network
+
+// create a .env file with the APIKEY=$APIKEY value; look for clickup documentation.
+
 import express from 'express'
 import { router } from './router/router.js';
 import * as dotenv from 'dotenv'
