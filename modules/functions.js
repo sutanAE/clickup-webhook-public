@@ -94,8 +94,50 @@ export async function getSingleTask(props = {}) {
                 }
             })
         const data = await resp.json();
-          return {status: 200, data: data}
+          return data
         }catch{ 
             return {status: 500, message: "errror"}
         }
+}
+
+
+export async function handleWebhook(props = {}) {
+    const {taskId, apiKey} = props
+    if (!taskId) return {status: 400, message: "you need to pass taskId"}
+    if (!apiKey) return {status: 400, message: "you need to pass apiKey"}
+
+    console.log("passing the data to getSingleTask")
+
+    const taskData = await getSingleTask(props)
+    console.log(taskData)
+
+    // validate if the taskData is there
+    // const {message} = taskData
+    // const {status} = message
+
+    return taskData
+}
+
+
+export async function updateCustom(props ={}){
+    const {taskId, apiKey, fieldId} = props
+    if (!taskId) return {status: 400, message: "you need to pass taskId"}
+    if (!apiKey) return {status: 400, message: "you need to pass apiKey"}
+    if (!fieldId) return {status: 400, message: "you need to pass fieldId"}
+
+
+    const resp = await fetch(
+        `https://api.clickup.com/api/v2/task/${taskId}/field/${fieldId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: apiKey
+          },
+          body: JSON.stringify({
+            value: 'this value was changed by server.'
+          })})
+    const data = await resp.json()
+    return data
+
 }
