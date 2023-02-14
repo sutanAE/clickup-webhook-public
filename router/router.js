@@ -72,7 +72,16 @@ router.post("/clickup/webhook/:taskId/edit", async (req,res)=>{
     console.log(req.headers)
     console.log("BODY \n")
     console.log(req.body)
-    const data = await updateCustom({taskId: req.params.taskId, apiKey: process.env.APIKEY, fieldId: routerConfig.affectedField})
+    // const data = await updateCustom({taskId: req.params.taskId, apiKey: process.env.APIKEY, fieldId: routerConfig.affectedField})
+
+
+    console.log("HASHING")
+    const body = req.body
+    const hash = crypto.createHmac('sha256', key).update(body);
+    const signature = hash.digest('hex');
+
+    console.log("HASH")
+    console.log(hash)
     return res.status(200).send({status:200, message: data})
 })
 
