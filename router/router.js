@@ -2,6 +2,7 @@ import {Router} from "express";
 import { getTasks, createTask, editTask, getSingleTask, handleWebhook, updateCustom } from "../modules/functions.js";
 import * as dotenv from 'dotenv'
 import { routerConfig } from "./router.config.js";
+import crypto from 'crypto'
 dotenv.config()
 
 export const router = Router()
@@ -36,16 +37,25 @@ router.get("/router",(req,res)=>{
     return res.status(200).send({status:200, message: "hello from router!"})
 })
 
-
 router.get("/clickup/webhook/", async (req,res)=>{
     return res.status(200).send({status:200, message: "clickup webhook"})
 })
 
+// webhook secret!
+const key = process.env.WEBHOOKSECRET;
 router.post("/clickup/webhook/print", async (req,res)=>{
     console.log("HEADERS")
     console.log(req.headers)
     console.log("BODY \n")
     console.log(req.body)
+
+
+    const body = req.body
+    const hash = crypto.createHmac('sha256', key).update(body);
+    const signature = hash.digest('hex');
+
+    console.log("HASH")
+    console.log(hash)
     return res.status(200).send({status:200, message: "clickup webhook"})
 })
 
