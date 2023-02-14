@@ -44,12 +44,13 @@ router.get("/clickup/webhook/", async (req,res)=>{
 // webhook secret!
 const key = process.env.WEBHOOKSECRET;
 router.post("/clickup/webhook/print", async (req,res)=>{
+    console.log("PRINT")
     console.log("HEADERS")
     console.log(req.headers)
     console.log("BODY \n")
     console.log(req.body)
 
-
+    console.log("HASHING")
     const body = req.body
     const hash = crypto.createHmac('sha256', key).update(body);
     const signature = hash.digest('hex');
@@ -66,6 +67,7 @@ router.get("/clickup/webhook/:taskId/edit", async (req,res)=>{
 
 
 router.post("/clickup/webhook/:taskId/edit", async (req,res)=>{
+    console.log("TASK EDIT")
     console.log("HEADERS")
     console.log(req.headers)
     console.log("BODY \n")
