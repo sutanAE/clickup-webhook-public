@@ -23,7 +23,7 @@ app.use((err, req, res, next) => {
     res.status(200).send({status: 500, message: "something broke in the server"})
   })
 
-app.use("/api", router)
+app.use("/clickupapi/api", router)
 
 app.get("/",(req,res)=>{
 
