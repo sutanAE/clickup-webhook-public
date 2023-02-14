@@ -48,6 +48,9 @@ router.get("/clickup/webhook/:taskId/edit", async (req,res)=>{
 
 
 router.post("/clickup/webhook/:taskId/edit", async (req,res)=>{
+    console.log("HEADERS")
+    console.log(req.headers)
+    console.log("BODY \n")
     console.log(req.body)
     const data = await updateCustom({taskId: req.params.taskId, apiKey: process.env.APIKEY, fieldId: routerConfig.affectedField})
     return res.status(200).send({status:200, message: data})
