@@ -52,11 +52,11 @@ router.post("/clickup/webhook/print", async (req,res)=>{
 
     console.log("HASHING")
     const body = req.body
-    const hash = crypto.createHmac('sha256', key).update(body);
+    const hash = crypto.createHmac('sha256', key).update(JSON.stringify(body));
     const signature = hash.digest('hex');
 
     console.log("HASH")
-    console.log(hash)
+    console.log(signature)
     return res.status(200).send({status:200, message: "clickup webhook"})
 })
 
@@ -77,12 +77,12 @@ router.post("/clickup/webhook/:taskId/edit", async (req,res)=>{
 
     console.log("HASHING")
     const body = req.body
-    const hash = crypto.createHmac('sha256', key).update(body);
+    const hash = crypto.createHmac('sha256', key).update(JSON.stringify(body));
     const signature = hash.digest('hex');
 
     console.log("HASH")
-    console.log(hash)
-    return res.status(200).send({status:200, message: data})
+    console.log(signature)
+    return res.status(200).send({status:200, message: "okay"})
 })
 
 router.get("/clickup/webhook/:taskId", async (req,res)=>{
